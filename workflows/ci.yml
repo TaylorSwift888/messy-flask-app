@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # 没有安装pytest或依赖就直接运行，必然出错
+      - name: Run tests
+        run: pytest
+
+      # 构建Docker镜像不考虑缓存和tag优化
+      - name: Build Docker
+        run: docker build -t messy-app:latest .
